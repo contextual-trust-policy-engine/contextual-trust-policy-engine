@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+title: "Contextual Trust Policy Engine"
+message: If you use this software, please cite it.
+authors:
+  - family-names: Sawant
+    given-names: Parag
+version: 0.1.0
+date-released: 2026-09-25
+repository-code: https://github.com/contextual-trust-policy-engine/contextual-trust-policy-engine
+license: Apache-2.0

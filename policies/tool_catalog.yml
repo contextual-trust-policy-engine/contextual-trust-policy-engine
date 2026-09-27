@@ -1,0 +1,9 @@
+tools:
+  http.get: {risk: low, required_scopes: [net:read], egress: true}
+  http.post: {risk: high, required_scopes: [net:write], egress: true}
+  email.send: {risk: high, required_scopes: [email:send], egress: true}
+  fs.read: {risk: low, required_scopes: [fs:read], egress: false}
+  fs.write: {risk: medium, required_scopes: [fs:write], egress: false}
+  mcp.*: {risk: low, required_scopes: [mcp:use], egress: false}
+  mcp.call: {risk: high, required_scopes: [mcp:use], egress: false}
+  secrets.read: {risk: critical, required_scopes: [secrets:read], egress: false}

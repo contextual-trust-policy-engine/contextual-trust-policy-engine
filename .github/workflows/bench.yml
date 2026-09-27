@@ -1,0 +1,18 @@
+permissions:
+  contents: read
+
+name: bench
+on:
+  workflow_dispatch:
+  schedule: [{cron: '0 3 * * *'}]
+jobs:
+  bench:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with: {python-version: '3.12'}
+      - run: python -m pip install "zero-trust-agent-benchmark @ git+https://github.com/zero-trust-agent-benchmark/zero-trust-agent-benchmark@v0.1.0"
+      - run: python -m pip install -e '.[dev]' && python bench/run_benchmarks.py
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with: {name: results, path: results/}

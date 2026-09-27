@@ -1,0 +1,7 @@
+{
+  "config": "Agents={a1,a2}, TTL=2, MaxTime=3",
+  "depth": 16,
+  "distinct_states": 101812,
+  "states_generated": 471756,
+  "violations": 0
+}

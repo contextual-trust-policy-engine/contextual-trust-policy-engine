@@ -1,0 +1,55 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+[project]
+name = "contextual-trust-policy-engine"
+version = "0.1.0"
+description = "Contextual Trust Policy Engine: AI Policy Enforcement with Contextual Trust"
+readme = "README.md"
+license = "Apache-2.0"
+license-files = ["LICENSE"]
+requires-python = ">=3.12"
+authors = [{ name = "Parag Sawant" }]
+keywords = ["ai-security", "zero-trust", "abac", "rebac", "policy"]
+classifiers = ["Programming Language :: Python :: 3.12", "Topic :: Security", "License :: OSI Approved :: Apache Software License"]
+dependencies = ["PyYAML>=6.0", "starlette>=0.40", "uvicorn>=0.30", "httpx>=0.27"]
+[project.optional-dependencies]
+dev = ["pytest>=8.3", "pytest-cov>=5.0", "hypothesis>=6.112", "ruff>=0.8", "mypy>=1.13", "types-PyYAML>=6.0", "bandit>=1.7", "pip-audit>=2.7"]
+[project.scripts]
+contextual-trust-policy-engine = "contextual_trust_policy_engine.cli:main"
+[project.urls]
+Homepage = "https://github.com/contextual-trust-policy-engine/contextual-trust-policy-engine"
+Issues = "https://github.com/contextual-trust-policy-engine/contextual-trust-policy-engine/issues"
+[tool.hatch.build.targets.wheel]
+packages = ["src/contextual_trust_policy_engine"]
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+extend-exclude = ["src/contextual_trust_policy_engine/stats.py", "src/contextual_trust_policy_engine/trust.py"]
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "S", "SIM", "RUF"]
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101", "S105", "S106", "S311", "S603", "S607"]
+"bench/**" = ["S101", "S311", "S607", "T201"]
+"conformance/**" = ["S101"]
+"scripts/**" = ["T201"]
+"src/contextual_trust_policy_engine/stats.py" = ["S311", "E231", "E501", "RUF022"]
+[tool.ruff.format]
+line-ending = "lf"
+[tool.mypy]
+strict = true
+python_version = "3.12"
+files = ["src"]
+[[tool.mypy.overrides]]
+module = ["uvicorn"]
+ignore_missing_imports = true
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+markers = ["integration: needs Docker/OPA (set RUN_INTEGRATION_TESTS=1)"]
+[tool.coverage.run]
+branch = true
+source = ["contextual_trust_policy_engine"]
+omit = ["src/contextual_trust_policy_engine/cli.py", "src/contextual_trust_policy_engine/stats.py", "src/contextual_trust_policy_engine/trust.py"]
+[tool.coverage.report]
+exclude_lines = ["pragma: no cover", "if __name__ == .__main__.:", "raise NotImplementedError"]

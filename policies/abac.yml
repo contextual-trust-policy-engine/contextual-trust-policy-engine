@@ -1,0 +1,11 @@
+rules:
+  - id: deny_untrusted_origin_side_effect
+    effect: deny
+    tools: [email.*, http.post, fs.write, mcp.*]
+    conditions: [{field: origin, not_in: [user]}]
+    reason: untrusted_origin_side_effect
+  - id: allow_authenticated_tools
+    effect: allow
+    tools: ['*']
+    conditions: [{field: svid_valid, eq: true}, {field: attestation_valid, eq: true}]
+    reason: abac_allow
